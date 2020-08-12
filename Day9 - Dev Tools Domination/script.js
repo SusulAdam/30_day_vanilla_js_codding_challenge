@@ -1,53 +1,79 @@
-const canvas = document.querySelector('#draw');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-ctx.strokeStyle = '#BADA55';
-ctx.lineJoin = 'round';
-ctx.lineCap = 'round';
-ctx.lineWidth = 100;
-// ctx.globalCompositeOperation = 'multiply';
 
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-let hue = 0;
-let direction = true;
-
-function draw(e) {
-    if (!isDrawing) return; // stop the fn from running when they are not moused down
-    console.log(e);
-    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    ctx.beginPath();
-    // start from
-    ctx.moveTo(lastX, lastY);
-    // go to
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-
-    hue++;
-    if (hue >= 360) {
-        hue = 0;
-    }
-    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
-        direction = !direction;
-    }
-
-    if (direction) {
-        ctx.lineWidth++;
-    } else {
-        ctx.lineWidth--;
-    }
-
+function makeGreen() {
+    const p = document.querySelector('p');
+    p.style.color = '#BADA55';
+    p.style.fontSize = '50px';
 }
 
-canvas.addEventListener('mousedown', (e) => {
-    isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+// Regular
+console.log('hello');
+
+// Interpolated
+
+console.log('hello i am a %s string', 'VARIABLE');
+
+// Styled
+
+console.log('%c I am a great text', 'font-size: 30px; background: red;');
+
+// warning!
+
+console.warn('WORRRniiingg');
+
+// Error :|
+
+console.error('sorry for the error');
+
+// Info
+console.info('That\' a info')
+
+// Testing
+// we can for example check if element contains some class
+console.assert(1 === 4, '1 it isn\'t 4');
+
+// clearing
+
+console.clear();
+
+// Viewing DOM Elements
+
+const p = document.querySelector('p');
+console.log(p);
+console.dir(p);
+
+// Grouping together
+const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+dogs.forEach(dog => {
+    console.groupCollapsed(`${dog.name}`);
+    console.log(`This is ${dog.name}`);
+    console.log(`${dog.name} is ${dog.age} years old`);
+    console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+    console.groupEnd(`${dog.name}`);
 });
+// counting
 
+console.count('Wes');
+console.count('Wes');
+console.count('Steve');
+console.count('Steve');
+console.count('Wes');
+console.count('Steve');
+console.count('Wes');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve');
 
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener('mouseout', () => isDrawing = false);
+// timing
+
+console.time('fetching-data');
+fetch('https://api.github.com/users/wesbos')
+    .then(data => data.json()
+        .then(data => {
+            console.timeEnd('fetching-data');
+            console.log(data)
+        }))
+
+console.table(dogs);
